@@ -1,0 +1,47 @@
+{% extends 'base.html'%}
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {{ book.title }}{% endblock %}</title>
+</head>
+{% block content %}
+<body>
+<h1>Name: {{ book.title }}</h1>}
+<img src="{{ book.image.url }}" height="200px"> <br><br>
+<h4>
+    Author: {% for author in authors %}
+                {{ author.author }},
+            {% endfor %}
+</h4>
+<h4>Description: {{ book.description }}</h4>
+<h4>Price: {{ book.price }}</h4>
+<h4>Pages: {{ book.page }}</h4>
+<h4>Rating: {{ total }}</h4>
+</body>
+<a href="{% url 'products:book-delete' book.pk %}" >Delete</a>
+<h2>Reviews</h2>
+<a href="{% url 'products:add-review' book.pk %}" >Add Review</a>
+{% for review in reviews %}
+    <h4>{{ review.user.username }} | {{ review.star_given }}</h4>
+     {% if request.user == review.user %}
+        <a href="{% url 'products:edit-review' review.pk %}" >Update</a>
+        <a href="{% url 'products:delete-review' review.pk %}" >Delete</a>
+    {% endif %}
+    <p>{{ review.comment }}</p><hr>
+
+{% endfor %}
+
+
+<hr><hr>
+
+{% for book in category_books %}
+    <div style="display:flex">
+            <img src="{{ book.image.url }}" height="80px">
+
+            {{ book.title }}
+
+    </div>
+{% endfor %}
+
+{% endblock content%}
+

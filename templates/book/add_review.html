@@ -1,0 +1,16 @@
+{% extends 'base.html'%}
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Add review{% endblock %}</title>
+</head>
+{% block content %}
+<h1>{{ books.title }}</h1>
+
+<form method="post" >
+    {% csrf_token %}
+    {{ add_review_form.as_p }}
+    <input type="submit" value="Add Review">
+</form>
+
+{% endblock content%}
